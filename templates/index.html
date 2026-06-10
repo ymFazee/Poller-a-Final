@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Don Fuego — Pollos a la Brasa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --carbon:   #1a1410;
+      --ember:    #c0390f;
+      --gold:     #e8a020;
+      --smoke:    #2d2420;
+      --ash:      #f5f0eb;
+      --text:     #3a2e28;
+      --muted:    #8a7060;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--carbon);
+      color: var(--ash);
+    }
+
+    /* ── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(26,20,16,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(192,57,15,0.25);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .logo span { color: var(--ember); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--ash);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    .nav-cta {
+      background: var(--ember);
+      color: #fff !important;
+      opacity: 1 !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: #a02e0a !important; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fuego animado de fondo */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(192,57,15,0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 30% 80%, rgba(232,160,32,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 70% 80%, rgba(232,160,32,0.15) 0%, transparent 60%);
+      animation: flicker 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      0%   { opacity: 0.8; transform: scaleY(1); }
+      50%  { opacity: 1;   transform: scaleY(1.04); }
+      100% { opacity: 0.75; transform: scaleY(0.97); }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .line-ember { color: var(--ember); display: block; }
+    .hero h1 .line-gold  { color: var(--gold);  display: block; font-size: 0.55em; font-weight: 700; letter-spacing: 0.05em; margin-top: 0.4em; }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(245,240,235,0.65);
+      max-width: 480px;
+      line-height: 1.65;
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+    }
+
+    .btn-primary {
+      background: var(--ember);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #a02e0a; transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid rgba(245,240,235,0.3);
+      color: var(--ash);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ── STATS ──────────────────────────────────────────── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(192,57,15,0.2);
+      border-bottom: 1px solid rgba(192,57,15,0.2);
+      background: var(--smoke);
+      flex-wrap: wrap;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    /* ── SECCIONES COMUNES ──────────────────────────────── */
+    section { padding: 5rem 2rem; }
+
+    .section-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--ash);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .section-head { margin-bottom: 3rem; }
+
+    /* ── CARTA (PRODUCTOS) ──────────────────────────────── */
+    #carta { background: var(--carbon); }
+
+    .carta-inner { max-width: 1100px; margin: 0 auto; }
+
+    .carta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .carta-card {
+      background: var(--smoke);
+      border: 1px solid rgba(192,57,15,0.15);
+      border-radius: 6px;
+      padding: 1.75rem;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .carta-card:hover { border-color: var(--ember); transform: translateY(-4px); }
+
+    .carta-cat {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .carta-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ash);
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+
+    .carta-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ember);
+    }
+    .carta-price span {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-left: 0.25rem;
+    }
+
+    /* ── SERVICIOS ──────────────────────────────────────── */
+    #servicios { background: var(--smoke); }
+
+    .servicios-inner { max-width: 1100px; margin: 0 auto; }
+
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .servicio-card {
+      background: var(--carbon);
+      border-left: 3px solid var(--ember);
+      padding: 1.5rem;
+      border-radius: 0 6px 6px 0;
+      transition: border-color 0.2s;
+    }
+    .servicio-card:hover { border-color: var(--gold); }
+
+    .servicio-tipo {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .servicio-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ash);
+      margin-bottom: 0.5rem;
+    }
+
+    .servicio-disp {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .servicio-precio {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    /* ── CONTACTO ───────────────────────────────────────── */
+    #contacto { background: var(--carbon); }
+
+    .contacto-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contacto-inner .section-sub { margin: 0 auto 2.5rem; }
+
+    .contacto-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .contacto-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: rgba(245,240,235,0.7);
+    }
+
+    .contacto-icon {
+      width: 2rem;
+      height: 2rem;
+      background: var(--smoke);
+      border: 1px solid rgba(192,57,15,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--smoke);
+      border-top: 1px solid rgba(192,57,15,0.2);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--ember); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-admin {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-admin:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .stats { gap: 2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Don<span>Fuego</span></a>
+    <ul class="nav-links">
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="/login" class="nav-cta">Ingresar</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Restaurante de pollos a la brasa</p>
+    <h1>
+      <span class="line-ember">Don Fuego</span>
+      <span class="line-gold">El sabor que nunca se apaga</span>
+    </h1>
+    <p class="hero-sub">
+      Pollos dorados al carbón, con receta propia y el punto exacto de brasa
+      que llevamos perfeccionando desde el primer día.
+    </p>
+    <div class="hero-actions">
+      <a href="#carta" class="btn-primary">Ver la carta</a>
+      <a href="#contacto" class="btn-outline">Hacer un pedido</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">+5</div>
+      <div class="stat-label">Platos principales</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Servicios disponibles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Días a la semana</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">S/5</div>
+      <div class="stat-label">Delivery a domicilio</div>
+    </div>
+  </div>
+
+  <!-- CARTA -->
+  <section id="carta">
+    <div class="carta-inner">
+      <div class="section-head">
+        <p class="section-tag">Nuestra carta</p>
+        <h2 class="section-title">Lo que sale de nuestra brasa</h2>
+        <p class="section-sub">
+          Ingredientes frescos, marinado de 24 horas y el calor exacto del carbón.
+        </p>
+      </div>
+
+      <div class="carta-grid">
+        <div class="carta-card">
+          <div class="carta-cat">Plato Principal</div>
+          <div class="carta-name">Pollo a la Brasa (Entero)</div>
+          <div class="carta-price">S/48.90 <span>incluye papas y ensalada</span></div>
+        </div>
+        <div class="carta-card">
+          <div class="carta-cat">Plato Principal</div>
+          <div class="carta-name">Pollo a la Brasa (1/4)</div>
+          <div class="carta-price">S/18.90 <span>incluye papas y ensalada</span></div>
+        </div>
+        <div class="carta-card">
+          <div class="carta-cat">Hamburguesas</div>
+          <div class="carta-name">Hamburguesa Premium</div>
+          <div class="carta-price">S/24.90 <span>con papas fritas</span></div>
+        </div>
+        <div class="carta-card">
+          <div class="carta-cat">Acompañamientos</div>
+          <div class="carta-name">Salchipapas Especial</div>
+          <div class="carta-price">S/19.90</div>
+        </div>
+        <div class="carta-card">
+          <div class="carta-cat">Bebidas</div>
+          <div class="carta-name">Chicha Morada (1 Litro)</div>
+          <div class="carta-price">S/8.00 <span>natural, hecha en casa</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="servicios-inner">
+      <div class="section-head">
+        <p class="section-tag">Cómo atendemos</p>
+        <h2 class="section-title">Servicios disponibles</h2>
+        <p class="section-sub">
+          Desde delivery hasta catering para eventos — nos adaptamos a lo que necesitas.
+        </p>
+      </div>
+
+      <div class="servicios-grid">
+        <div class="servicio-card">
+          <div class="servicio-tipo">Entrega</div>
+          <div class="servicio-nombre">Delivery a Domicilio</div>
+          <div class="servicio-disp">📅 Todos los días</div>
+          <div class="servicio-precio">S/5.00 por envío</div>
+        </div>
+        <div class="servicio-card">
+          <div class="servicio-tipo">Restaurante</div>
+          <div class="servicio-nombre">Reserva de Mesa</div>
+          <div class="servicio-disp">📅 Lun – Dom</div>
+          <div class="servicio-precio">Sin costo</div>
+        </div>
+        <div class="servicio-card">
+          <div class="servicio-tipo">Empresarial</div>
+          <div class="servicio-nombre">Menú Corporativo</div>
+          <div class="servicio-disp">📅 Lunes a Viernes</div>
+          <div class="servicio-precio">Desde S/35.00 por persona</div>
+        </div>
+        <div class="servicio-card">
+          <div class="servicio-tipo">Eventos</div>
+          <div class="servicio-nombre">Catering para Eventos</div>
+          <div class="servicio-disp">📅 Previa cita</div>
+          <div class="servicio-precio">Desde S/500.00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="contacto-inner">
+      <p class="section-tag">Encuéntranos</p>
+      <h2 class="section-title">Haz tu pedido hoy</h2>
+      <p class="section-sub">
+        Escríbenos o llámanos y te atendemos de inmediato. También puedes
+        pasar directamente — siempre hay brasa encendida.
+      </p>
+
+      <div class="contacto-items">
+        <div class="contacto-item">
+          <div class="contacto-icon">📍</div>
+          Av. Principal 123, Lima, Perú
+        </div>
+        <div class="contacto-item">
+          <div class="contacto-icon">📞</div>
+          (01) 987-654-321
+        </div>
+        <div class="contacto-item">
+          <div class="contacto-icon">⏰</div>
+          Lun – Dom, 11:00 am – 10:00 pm
+        </div>
+      </div>
+
+      <a href="#servicios" class="btn-primary">Ver servicios de entrega</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <!-- WhatsApp flotante -->
+  <a href="https://wa.me/51928804980" target="_blank" class="whatsapp-btn" title="Escríbenos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <style>
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      background: #25d366;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      z-index: 999;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37,211,102,0.55);
+    }
+    .instagram-btn {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 5.5rem;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(220,39,67,0.4);
+      z-index: 999;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .instagram-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(220,39,67,0.55);
+    }
+  </style>
+
+  <!-- Instagram flotante -->
+  <a href="https://www.instagram.com/ymfaze_/?hl=es" target="_blank" class="instagram-btn" title="Síguenos en Instagram">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="26" height="26">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </svg>
+  </a>
+
+  <footer>
+    <a href="#" class="footer-logo">Don<span>Fuego</span></a>
+    <span class="footer-copy">© 2026 Don Fuego. Todos los derechos reservados.</span>
+    <a href="/login" class="footer-admin">Acceso al sistema →</a>
+  </footer>
+
+</body>
+</html>

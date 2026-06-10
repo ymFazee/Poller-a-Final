@@ -1,0 +1,62 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Productos{% endblock %}
+{% block page_title %}Productos{% endblock %}
+{% block page_sub %}Gestiona el catálogo de productos{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="panel-header">
+    <h2>Lista de Productos</h2>
+    <div class="panel-tools">
+      <form method="get" style="display:flex;gap:8px;">
+        <input class="search-box" name="q" value="{{ q }}" placeholder="Buscar producto…">
+        <button type="submit" class="btn-secondary">Buscar</button>
+      </form>
+      <a href="{{ url_for('producto_nuevo') }}" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nuevo Producto
+      </a>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Acciones</th></tr>
+      </thead>
+      <tbody>
+        {% for p in productos %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.nombre }}</td>
+          <td><span class="badge badge-blue">{{ p.categoria }}</span></td>
+          <td>S/ {{ "%.2f"|format(p.precio) }}</td>
+          <td>{{ p.stock }}</td>
+          <td>
+            {% if p.estado == 'Activo' %}
+              <span class="badge badge-green">Activo</span>
+            {% else %}
+              <span class="badge badge-red">Inactivo</span>
+            {% endif %}
+          </td>
+          <td style="display:flex;gap:8px;">
+            <a href="{{ url_for('producto_editar', id=p.id) }}" class="btn-edit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Editar
+            </a>
+            <form method="post" action="{{ url_for('producto_eliminar', id=p.id) }}" onsubmit="return confirm('¿Eliminar este producto?')">
+              <button type="submit" class="btn-del">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Eliminar
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr class="empty-row"><td colspan="7">No se encontraron productos.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Editar' if usr else 'Nuevo' }} Usuario{% endblock %}
+{% block page_title %}{{ 'Editar' if usr else 'Nuevo' }} Usuario{% endblock %}
+{% block page_sub %}Completa los campos del formulario{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <form method="post">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nombre completo *</label>
+        <input type="text" name="nombre" value="{{ usr.nombre if usr else '' }}" required placeholder="Ej: Juan Mesero">
+      </div>
+      <div class="form-group">
+        <label>Nombre de usuario *</label>
+        <input type="text" name="usuario" value="{{ usr.usuario if usr else '' }}" required placeholder="jmesero">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Contraseña {% if usr %}— dejar en blanco para no cambiar{% endif %} {% if not usr %}*{% endif %}</label>
+      <input type="password" name="password" {% if not usr %}required{% endif %} placeholder="••••••••">
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Rol</label>
+        <select name="rol">
+          {% for r in ['Administrador','Operador','Cajero'] %}
+            <option {% if usr and usr.rol == r %}selected{% endif %}>{{ r }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Estado</label>
+        <select name="estado">
+          <option {% if not usr or usr.estado == 'Activo' %}selected{% endif %}>Activo</option>
+          <option {% if usr and usr.estado == 'Inactivo' %}selected{% endif %}>Inactivo</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar
+      </button>
+      <a href="{{ url_for('usuarios') }}" class="btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
